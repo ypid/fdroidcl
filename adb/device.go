@@ -165,7 +165,7 @@ func getAbis(device *Device, props map[string]string) []string {
 var installFailureRegex = regexp.MustCompile(`^Failure \[INSTALL_(.+)\]$`)
 
 func (d *Device) Install(path string) error {
-	cmd := d.AdbCmd(append([]string{"install", "-r"}, path)...)
+	cmd := d.AdbCmd(append([]string{"install", "-r", "-i", "com.machiav3lli.fdroid"}, path)...)
 	output, err := cmd.CombinedOutput()
 	line := getResultLine(output)
 	if err == nil && line == "Success" {
@@ -179,7 +179,7 @@ func (d *Device) Install(path string) error {
 }
 
 func (d *Device) InstallUser(path, user string) error {
-	cmd := d.AdbCmd(append([]string{"install", "-r", "--user"}, user, path)...)
+	cmd := d.AdbCmd(append([]string{"install", "-r", "-i", "com.machiav3lli.fdroid", "--user"}, user, path)...)
 	output, err := cmd.CombinedOutput()
 	line := getResultLine(output)
 	if err == nil && line == "Success" {
